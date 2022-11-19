@@ -1,6 +1,7 @@
 package org.example;
 
-import com.gargoylesoftware.htmlunit.WebClient;
+import static org.example.PageLoader.loadHtmlPage;
+
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
@@ -13,27 +14,27 @@ public class HtmlUnitScraper {
   public static void main(String[] args) throws IOException {
 
     // Connect to a URL and return an HTML page (home page)
-    HtmlPage htmlPage = loadHtmlPage(UrlManipulator.ACCOUNTS_BOARD_FIRST_PAGE);
-
+    HtmlPage htmlPage = loadHtmlPage(UrlGenerator.ACCOUNTS_BOARD_FIRST_PAGE);
     // Collect URLs
-    Set<String> anchorStringUrlSet = UrlManipulator.collectUrls(htmlPage);
-    
-    List<String> threadUrlList = UrlManipulator.generateThreadUrls(anchorStringUrlSet, UrlManipulator.ACCOUNTS);
+    Set<String> anchorStringUrlSet = UrlGenerator.collectUrls(htmlPage);
+    // Generate thread URLs
+    List<String> threadUrlList = UrlGenerator.generateThreadUrls(anchorStringUrlSet, UrlGenerator.ACCOUNTS);
 
 
 
-    HtmlPage threadPage = loadHtmlPage(threadUrlList.get(0));
+//    HtmlPage threadPage = loadHtmlPage(threadUrlList.get(0));
+//
+//    // get title text
+//    String title = getThreadTitle(threadPage);
+//    // get title post text
+//    String titlePostText = getTitlePostText(threadPage);
+//    // get next reply
+//    String firstReply = getFirstReply(threadPage);
+//    // get all replies
+//    List<String> threadRepliesList = getReplies(threadPage);
+//    // switch to next page
+    System.out.println(UrlGenerator.pageNumberUrl(UrlGenerator.ACCOUNTS_BOARD_FIRST_PAGE, 4300)); // TODO set a page number limit
 
-    // get title text
-    String title = getThreadTitle(threadPage);
-    // get title post text
-    String titlePostText = getTitlePostText(threadPage);
-    // get next reply
-    String firstReply = getFirstReply(threadPage);
-    // get all replies
-    List<String> threadRepliesList = getReplies(threadPage);
-
-    threadRepliesList.forEach(reply -> System.out.println("REPLY: \n" + reply));
     System.out.println();
 
   }
@@ -84,13 +85,5 @@ public class HtmlUnitScraper {
 
 
 
-  public static HtmlPage loadHtmlPage(String url) throws IOException {
-    WebClient webClient = new WebClient();
 
-    webClient.getOptions().setUseInsecureSSL(true);
-    webClient.getOptions().setCssEnabled(false);
-    webClient.getOptions().setJavaScriptEnabled(false);
-
-    return webClient.getPage(url);
-  }
 }

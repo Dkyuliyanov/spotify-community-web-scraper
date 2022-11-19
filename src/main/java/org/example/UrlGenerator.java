@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UrlManipulator {
+public class UrlGenerator {
 
   public final static String ACCOUNTS_BOARD_FIRST_PAGE = "https://community.spotify.com/t5/Accounts/bd-p/spotifyaccountrelated";
 
   public final static String HOME_PAGE = "https://community.spotify.com";
 
   public final static String ACCOUNTS = "/t5/Accounts/";
+
+  public final static String PAGE = "/page/";
 
   public static Set<String> collectUrls(HtmlPage htmlPage) {
 
@@ -30,11 +32,16 @@ public class UrlManipulator {
 
     // Generate board specific thread Urls
     return accountPageThreadUrlFilteredList.stream()
-        .map(str -> UrlManipulator.HOME_PAGE + str)
+        .map(str -> UrlGenerator.HOME_PAGE + str)
         .toList();
 
 
   }
 
 
+  public static String pageNumberUrl(String accountsBoardFirstPage, int pageNumber) {
+
+    return accountsBoardFirstPage + PAGE + pageNumber;
+
+  }
 }
