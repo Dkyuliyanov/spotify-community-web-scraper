@@ -1,8 +1,10 @@
 package org.example;
 
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,12 +27,61 @@ public class HtmlUnitScraper {
     List<String> threadUrlList = generateThreadUrls(UrlString.HOME_PAGE_SUFFIX,
         filteredThreadUrlAnchorStringList);
 
-    threadUrlList.forEach(System.out::println);
+    HtmlPage threadPage = loadHtmlPage(threadUrlList.get(0));
 
-//    HtmlPage threadPage = loadHtmlPage(firstThreadUrl);
+    // get title text
+    String title = getThreadTitle(threadPage);
+    // get title post text
+    String titlePostText = getTitlePostText(threadPage);
+    // get next reply
+    String firstReply = getFirstReply(threadPage);
+    // get all replies
+    List<String> threadRepliesList = getReplies(threadPage);
 
+
+
+    threadRepliesList.forEach(reply -> System.out.println("REPLY: \n" + reply));
     System.out.println();
 
+  }
+
+  private static List<String> getReplies(HtmlPage threadPage) {
+
+    List<String> repliesList = new ArrayList<>();
+    try {
+      for (int i = 1; i < 20; i++) {
+        DomElement domElement = threadPage.getFirstByXPath(StringUtil.generatePostXpath(i));
+        String currentReply = domElement.asNormalizedText();
+        repliesList.add(currentReply);
+      }
+
+    } catch (NullPointerException e) {
+      System.out.println("End of thread");
+      return repliesList;
+    }
+
+    return repliesList;
+  }
+
+  private static String getFirstReply(HtmlPage threadPage) {
+    DomElement domElement = threadPage.getFirstByXPath(
+        "/html/body/div[2]/center/div[1]/div/div/div/div[1]/div[6]/div/div/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div");
+
+    return domElement.asNormalizedText();
+  }
+
+  private static String getTitlePostText(HtmlPage threadPage) {
+
+    DomElement domElement = threadPage.getFirstByXPath(
+        "/html/body/div[2]/center/div[1]/div/div/div/div[1]/div[2]/div/div/div/div[1]/div/div/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div");
+    return domElement.asNormalizedText();
+  }
+
+  private static String getThreadTitle(HtmlPage threadPage) {
+
+    DomElement domElement = threadPage.getFirstByXPath(
+        "/html/body/div[2]/center/div[1]/div/div/div/div[1]/div[2]/div/div/div/div[1]/div/div/div/div/div[1]/div[2]/div/div[1]/div/div/div/div[1]/div/h2/span/div");
+    return domElement.asNormalizedText();
   }
 
   private static List<String> generateThreadUrls(String homePageUrlSuffix,

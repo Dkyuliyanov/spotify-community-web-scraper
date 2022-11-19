@@ -1,0 +1,20 @@
+post title:
+/html/body/div[2]/center/div[1]/div/div/div/div[1]/div[2]/div/div/div/div[1]/div/div/div/div/div[1]/div[2]/div/div[1]/div/div/div/div[1]/div/h2/span/div
+
+title post text:
+/html/body/div[2]/center/div[1]/div/div/div/div[1]/div[2]/div/div/div/div[1]/div/div/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div
+
+replies:
+1: /html/body/div[2]/center/div[1]/div/div/div/div[1]/div[6]/div/div/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div
+2: /html/body/div[2]/center/div[1]/div/div/div/div[1]/div[6]/div/div/div/div[2]/div[1]/div[2]/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div
+3: /html/body/div[2]/center/div[1]/div/div/div/div[1]/div[6]/div/div/div/div[2]/div[1]/div[3]/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div
+
+xpath first part:
+/html/body/div[2]/center/div[1]/div/div/div/div[1]/div[6]/div/div/div/div[2]/div[1]/div[
+
+xpath second part:
+]/div/div/div[1]/div[2]/div/div[3]/div/div/div[1]/div
+
+
+
+
