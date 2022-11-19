@@ -35,7 +35,7 @@ public class HtmlUnitScraper {
 
     }
 
-    private static HtmlPage connect(String url) throws IOException {
+    public static HtmlPage connect(String url) throws IOException {
         WebClient webClient = new WebClient();
 
         webClient.getOptions().setUseInsecureSSL(true);
